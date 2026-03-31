@@ -9,9 +9,9 @@ class ScreenManager {
   float instrButtonX, instrButtonY, instrButtonW, instrButtonH;
   
   ScreenManager() {
-    startMenuImg = loadImage("data/images/startMenu.png");
-    instructionMenuImg = loadImage("data/images/instructionsMenu.png");
-    button = loadImage("data/images/button.png");
+    startMenuImg = loadImage("startMenu.png");
+    instructionMenuImg = loadImage("instructionsMenu.png");
+    button = loadImage("button.png");
 
     menuButtonW = 200;
     menuButtonH = 100;

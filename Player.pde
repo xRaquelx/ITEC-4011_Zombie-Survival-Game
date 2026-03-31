@@ -8,7 +8,7 @@ class Player {
   Player(float startX, float startY) {
     x = startX;
     y = startY;
-    playerImg = loadImage("data/images/player.png");
+    playerImg = loadImage("player.png");
   }
   
   void display() {
