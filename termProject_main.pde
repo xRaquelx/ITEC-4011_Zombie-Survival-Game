@@ -1,3 +1,5 @@
+ArrayList<Tree> trees;
+
 Player player;
 ScreenManager screens;
 
@@ -7,6 +9,10 @@ void setup() {
   fullScreen();
   background(255);
   
+  trees = new ArrayList<Tree>();
+  for (int i = 0; i < 20; i++) {
+    trees.add(new Tree(new PVector(random(width), random(height)), random(80, 120)));
+  }
   player = new Player(200, 200);
   screens = new ScreenManager();
 
@@ -14,8 +20,10 @@ void setup() {
 }
 
 void draw() {
-  background(255);
-  
+  background(54, 92, 48);
+  for (Tree tree : trees) {
+    tree.display();
+  }
   screens.display(player);
 }
 
