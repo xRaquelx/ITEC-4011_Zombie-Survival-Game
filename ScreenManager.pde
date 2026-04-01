@@ -30,8 +30,29 @@ class ScreenManager {
     else if (state == 1)
       drawInstructions();
     else if (state == 2) {
+
+      // Player 
       player.update();
       player.display();
+      player.drawHealthBar(); // Adds player health bar 
+
+      // Food 
+      for (Food f: foods) {
+        f.display();
+
+      // Player collects food 
+        if (!f.collect && isColliding(player.x, player.y, player.radius, f.x, f.y, f.radius)) {
+          f.collected = true;
+          player.heal(10);
+        }
+      }
+
+      // Food collected is removed
+      for (int i = foods.size() - 1; i >=0; i--) {
+        if (foods.get(i).collected) { 
+          foods.remove(i);
+        }
+      }
     }
   }
   
