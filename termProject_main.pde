@@ -8,15 +8,15 @@ void setup() {
   background(255);
   
   trees = new ArrayList<Tree>();
-  for (int i = 0; i < 25; i++) {
-    trees.add(new Tree(new PVector(random(width), random(height)), random(60, 100)));
+  for (int i = 0; i < 20; i++) {
+    trees.add(new Tree(new PVector(random(width), random(height)), random(80, 120)));
   }
   player = new Player(200, 200);
   screens = new ScreenManager();
 }
 
 void draw() {
-  background(255);
+  background(54, 92, 48);
   for (Tree tree : trees) {
     tree.display();
   }

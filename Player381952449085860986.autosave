@@ -1,0 +1,69 @@
+class Player {
+  float x, y;
+  float size = 90;
+  PImage playerImg;
+  float speed = 3;
+  boolean w, a, s, d;
+  
+  Player(float startX, float startY) {
+    x = startX;
+    y = startY;
+    playerImg = loadImage("player.png");
+  }
+  
+  void display() {
+    image(playerImg, x, y, size, size * 2);
+    
+ // draw oval collider around whole player
+  noFill();
+  stroke(0, 255, 0);
+  strokeWeight(2);
+  ellipse(x + size/2, y + size, size, size * 2); // centered at middle, full height
+
+  }
+  
+  void update() {
+    if (w) 
+      y -= speed;
+    if (s) 
+      y += speed;
+    if (a) 
+      x -= speed;
+    if (d) 
+      x += speed;
+  }
+  
+  void handleKeyPressed(char key) {
+    if (key == 'w' || key == 'W') 
+      w = true;
+    if (key == 'a' || key == 'A') 
+      a = true;
+    if (key == 's' || key == 'S') 
+      s = true;
+    if (key == 'd' || key == 'D') 
+      d = true;
+  }
+
+  void handleKeyReleased(char key) {
+    if (key == 'w' || key == 'W') 
+      w = false;
+    if (key == 'a' || key == 'A') 
+      a = false;
+    if (key == 's' || key == 'S') 
+      s = false;
+    if (key == 'd' || key == 'D') 
+      d = false;
+  }
+  
+void checkTreeCollision(ArrayList<Tree> trees) {
+  for (Tree tree : trees) {
+    float d = dist(x + size/2, y + size, tree.position.x, tree.position.y); // center of player
+    if (d < tree.radius) {
+      PVector dir = new PVector(x + size/2 - tree.position.x, y + size - tree.position.y);
+      dir.normalize();
+      x = tree.position.x + dir.x * tree.radius - size/2;
+      y = tree.position.y + dir.y * tree.radius - size;
+    }
+  }
+}
+}
