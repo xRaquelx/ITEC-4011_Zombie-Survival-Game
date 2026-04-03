@@ -7,56 +7,52 @@ class Player {
 
   float colliderRadius = 45;
 
+  int health = 50;
+  int maxHealth = 100;
+
+
   Player(float startX, float startY) {
     x = startX;
     y = startY;
     playerImg = loadImage("player.png");
   }
 
-  float colliderX() {
-    return x;
-  }
-
-  float colliderY() {
-    return y;
+  void update() {
+    if (w) { y -= speed; if (collidesWithAnyTree()) y += speed; }
+    if (s) { y += speed; if (collidesWithAnyTree()) y -= speed; }
+    if (a) { x -= speed; if (collidesWithAnyTree()) x += speed; }
+    if (d) { x += speed; if (collidesWithAnyTree()) x -= speed; }
   }
 
   void display() {
     imageMode(CENTER);
     image(playerImg, x, y, size, size * 2);
-
-    //noFill();
-    //stroke(255, 0, 0);
-    //ellipse(colliderX(), colliderY(), colliderRadius * 2, colliderRadius * 2);
   }
 
-  void update() {
-    if (w) {
-      y -= speed;
-      if (collidesWithAnyTree()) y += speed;
-    }
-    if (s) {
-      y += speed;
-      if (collidesWithAnyTree()) y -= speed;
-    }
-    if (a) {
-      x -= speed;
-      if (collidesWithAnyTree()) x += speed;
-    }
-    if (d) {
-      x += speed;
-      if (collidesWithAnyTree()) x -= speed;
-    }
+  void drawHealthBar() {
+    fill(100);
+    rect(x - 50, y - 100, 100, 10);
+    fill(0, 255, 0);
+    float healthPercent = (float)health / maxHealth;
+    rect(x - 50, y - 100, 100 * healthPercent, 10);
+  }
+
+  void heal() {
+    health += 10;
+    if (health > maxHealth) health = maxHealth;
+  }
+
+  void takeDamage() {
+    health -= 5;
+    if (health < 0) health = 0;
   }
 
   boolean collidesWithAnyTree() {
     for (Tree tree : trees) {
-      float dx = colliderX() - tree.position.x;
-      float dy = colliderY() - tree.position.y;
-      float distance = sqrt(dx * dx + dy * dy);
-      if (distance < colliderRadius + tree.colliderRadius) {
-        return true;
-      }
+      float dx = x - tree.position.x;
+      float dy = y - tree.position.y;
+      float distance = sqrt(dx*dx + dy*dy);
+      if (distance < colliderRadius + tree.colliderRadius) return true;
     }
     return false;
   }

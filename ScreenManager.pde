@@ -41,11 +41,11 @@ class ScreenManager {
         f.display();
 
       // Player collects food 
-        if (!f.collect && isColliding(player.x, player.y, player.radius, f.x, f.y, f.radius)) {
-          f.collected = true;
-          player.heal(10);
-        }
-      }
+        if (!f.collected && isColliding(player.x, player.y, player.colliderRadius, f.x, f.y, f.radius)) {
+      f.collected = true;
+      player.heal();
+    }
+  }
 
       // Food collected is removed
       for (int i = foods.size() - 1; i >=0; i--) {
