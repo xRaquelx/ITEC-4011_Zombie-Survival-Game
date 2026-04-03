@@ -1,0 +1,37 @@
+// Interaction Collision with Player and Zombie 
+
+void checkCollisions(){
+    for (Zombie z : zombies) {
+        float d = dist(player.x, player.y, z.x, z.y);
+        if (d<30) {
+            player.damage(1);
+        }
+    }
+
+// Interaction Collision with Player and Food
+    for (Food f: foods) {
+        if(!f.collected) {
+            float d = dist(player.x, player.y, f.x, f.y);
+            if (d<25) {
+                f.collected = true;
+                player.heal(10);
+            }
+        }
+    }
+}
+
+void draw() {
+    background(0);
+
+    player.display();
+
+    for (Zombie z : zombies) z.display();
+    for (Food f : foods) f.display();
+
+    checkCollisions();
+
+    // have to still add isColliding function in main to be able to detect collision between characters and items 
+}
+
+
+
