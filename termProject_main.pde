@@ -1,4 +1,3 @@
-// Global variables
 Player player;
 ScreenManager screens;
 
@@ -27,16 +26,14 @@ void setup() {
 void draw() {
   background(54, 92, 48);
 
-  // Display trees
   for (Tree tree : trees) {
     tree.display();
   }
 
-  // Display player and health
+  // Player display 
   player.update();
   player.display();
 
-  // Display food and check collection
   for (int i = foods.size() - 1; i >= 0; i--) {
     Food f = foods.get(i);
     f.display();
@@ -49,7 +46,6 @@ void draw() {
     }
   }
 
-  // Screen manager overlay (menus)
   screens.display(player);
 }
 
