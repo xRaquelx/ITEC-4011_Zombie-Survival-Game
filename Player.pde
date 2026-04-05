@@ -22,6 +22,11 @@ class Player {
     if (s) { y += speed; if (collidesWithAnyTree()) y -= speed; }
     if (a) { x -= speed; if (collidesWithAnyTree()) x += speed; }
     if (d) { x += speed; if (collidesWithAnyTree()) x -= speed; }
+    
+    //canvas boundary
+    float margin = 30;
+    x = constrain(x, -margin, width  + margin);
+    y = constrain(y, -margin, height + margin);
   }
 
   void display() {

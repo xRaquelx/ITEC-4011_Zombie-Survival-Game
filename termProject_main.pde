@@ -9,10 +9,22 @@ void setup() {
   fullScreen();
   background(255);
 
-  // Create trees
+  //// Create trees
+  //trees = new ArrayList<Tree>();
+  //for (int i = 0; i < 20; i++) {
+  //  trees.add(new Tree(new PVector(random(width), random(height)), random(80, 120)));
+  //}
+  
+  // Create trees and not spawn where player spawns
+  float playerSpawnX = 200, playerSpawnY = 200;
+  float safeRadius = 150;
   trees = new ArrayList<Tree>();
   for (int i = 0; i < 20; i++) {
-    trees.add(new Tree(new PVector(random(width), random(height)), random(80, 120)));
+    PVector pos;
+    do {
+      pos = new PVector(random(width), random(height));
+    } while (dist(pos.x, pos.y, playerSpawnX, playerSpawnY) < safeRadius);
+    trees.add(new Tree(pos, random(80, 120)));
   }
 
   player = new Player(200, 200);
