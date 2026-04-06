@@ -24,12 +24,22 @@ void setup() {
   float playerSpawnX = 200, playerSpawnY = 200;
   float safeRadius = 150;
   trees = new ArrayList<Tree>();
-  for (int i = 0; i < 20; i++) {
-    PVector pos;
-    do {
-      pos = new PVector(random(width), random(height));
-    } while (dist(pos.x, pos.y, playerSpawnX, playerSpawnY) < safeRadius);
-    trees.add(new Tree(pos, random(80, 120)));
+
+  //make smaller for larger forest clusters
+  float noiseScale = 0.007;
+  //make higher for sparser map
+  float threshold = 0.615;
+  
+  for (int x = 0; x < width; x += 60) {
+    for (int y = 0; y < height; y += 60) {
+      float n = noise(x * noiseScale, y * noiseScale);
+      if (n > threshold) {
+        PVector pos = new PVector(x + random(-20, 20), y + random(-20, 20));
+        if (dist(pos.x, pos.y, playerSpawnX, playerSpawnY) > safeRadius) {
+          trees.add(new Tree(pos, random(70, 110)));
+        }
+      }
+    }
   }
 
   player = new Player(200, 200);
