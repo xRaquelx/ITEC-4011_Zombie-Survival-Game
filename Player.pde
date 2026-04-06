@@ -10,6 +10,9 @@ class Player {
   int health = 50;
   int maxHealth = 100;
 
+  // Damage cooldown 
+  int damageCooldown = 7000;
+  int lastDamageTime = -7000;
 
   Player(float startX, float startY) {
     x = startX;
@@ -48,8 +51,11 @@ class Player {
   }
 
   void takeDamage() {
-    health -= 5;
-    if (health < 0) health = 0;
+    if (millis() - lastDamageTime >= damageCooldown) {
+      health -= 5;
+      if (health < 0) health = 0;
+      lastDamageTime = millis();
+    }
   }
 
   boolean collidesWithAnyTree() {

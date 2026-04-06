@@ -18,7 +18,7 @@ class ScreenManager {
     menuButtonW = 200;
     menuButtonH = 100;
     menuButtonX = width / 2 - menuButtonW / 2;
-    menuButtonY = height / 2;
+    menuButtonY = height / 2 + 200; 
 
     instrButtonW = 200;
     instrButtonH = 100;
