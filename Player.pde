@@ -1,6 +1,6 @@
 class Player {
   float x, y;
-  float size = 90;
+  float size = 65;
   PImage playerImg;
   float speed = 3;
   boolean w, a, s, d;

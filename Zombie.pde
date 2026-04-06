@@ -7,7 +7,7 @@ class Zombie {
   int state = INACTIVE;
 
   PImage zombieImg;
-  int size = 90;
+  int size = 70;
 
   float x, y;
   float speed       = 1.5;
