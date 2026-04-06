@@ -9,9 +9,25 @@ class Zombie {
   float x, y;
   float speed = 1.5;
   
-  Zombie(float startX, float startY) {
+  float targetX, targetY;
+  
+  Zombie(float startX, float startY, float tx, float ty) {
     x = startX;
     y = startY;
+    targetX = tx;
+    targetY = ty;
+    zombieImg = loadImage("tempZombie.png");
+  }
+  
+    void update() {
+    float dx = targetX - x;
+    float dy = targetY - y;
+    float d = dist(x, y, targetX, targetY);
+
+    if (d > 1) {
+      x += (dx / d) * speed;
+      y += (dy / d) * speed;
+    }
   }
   
   void display() {

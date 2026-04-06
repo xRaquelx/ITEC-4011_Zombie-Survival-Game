@@ -7,20 +7,13 @@ ArrayList<Tree> trees;
 ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 
 // ----- Wave / Level -----
-int level = 1;
-int levelDuration = 1200;
-int lastSpawn = 0;
-int spawnInterval = 250;
+// Zombie spawn timing
+int lastSpawnTime = 0;
+int nextSpawnDelay = 0;
 
 void setup() {
   fullScreen();
   background(255);
-
-  //// Create trees
-  //trees = new ArrayList<Tree>();
-  //for (int i = 0; i < 20; i++) {
-  //  trees.add(new Tree(new PVector(random(width), random(height)), random(80, 120)));
-  //}
   
   // Create trees and not spawn where player spawns
   float playerSpawnX = 200, playerSpawnY = 200;
@@ -41,6 +34,10 @@ void setup() {
 
   // Spawn food
   spawnFood(10);
+  
+  // Zombie spawn
+  lastSpawnTime = millis();
+  nextSpawnDelay = int(random(2000, 5000));
 }
 
 void draw() {
@@ -67,6 +64,19 @@ void draw() {
       foods.remove(i); // Remove collected food
     }
   }
+  
+  // Zombie spawn at random times
+  if (millis() - lastSpawnTime >= nextSpawnDelay) {
+    spawnZombie();
+    lastSpawnTime = millis();
+    nextSpawnDelay = int(random(2000, 5000)); // pick a new random delay each time
+  }
+  
+  // Update and display zombies
+  for (Zombie z : zombies) {
+    z.update();
+    z.display();
+  }
 
   // Screen manager overlay (menus)
   screens.display(player);
@@ -84,6 +94,41 @@ void spawnFood(int amount){
     float y = random(height);
     foods.add(new Food(x, y));
   }
+}
+
+void spawnZombie() {
+  float spawnX = 0;
+  float spawnY = 0;
+  float offset = 100;
+
+  // target point somewhere inside the map
+  float targetX = random(100, width - 100);
+  float targetY = random(100, height - 100);
+
+  int side = int(random(4));
+
+  if (side == 0) {
+    // top
+    spawnX = random(width);
+    spawnY = -offset;
+  } 
+  else if (side == 1) {
+    // bottom
+    spawnX = random(width);
+    spawnY = height + offset;
+  } 
+  else if (side == 2) {
+    // left
+    spawnX = -offset;
+    spawnY = random(height);
+  } 
+  else {
+    // right
+    spawnX = width + offset;
+    spawnY = random(height);
+  }
+
+  zombies.add(new Zombie(spawnX, spawnY, targetX, targetY));
 }
 
 // Collision detection
