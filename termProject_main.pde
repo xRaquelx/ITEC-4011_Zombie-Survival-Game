@@ -4,6 +4,13 @@ ScreenManager screens;
 
 ArrayList<Food> foods = new ArrayList<Food>();
 ArrayList<Tree> trees;
+ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+
+// ----- Wave / Level -----
+int level = 1;
+int levelDuration = 1200;
+int lastSpawn = 0;
+int spawnInterval = 250;
 
 void setup() {
   fullScreen();
