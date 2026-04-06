@@ -3,6 +3,7 @@ class ScreenManager {
   
   PImage startMenuImg;
   PImage instructionMenuImg; 
+  PImage endWinImg;
   PImage button;
   
   float menuButtonX, menuButtonY, menuButtonW, menuButtonH;
@@ -12,6 +13,7 @@ class ScreenManager {
     startMenuImg = loadImage("startMenu.png");
     instructionMenuImg = loadImage("instructionsMenu.png");
     button = loadImage("button.png");
+    endWinImg = loadImage("endWin.png");
 
     menuButtonW = 200;
     menuButtonH = 100;
@@ -30,7 +32,6 @@ class ScreenManager {
     else if (state == 1)
       drawInstructions();
     else if (state == 2) {
-
       // Player 
       player.update();
       player.display();
@@ -40,12 +41,12 @@ class ScreenManager {
       for (Food f: foods) {
         f.display();
 
-      // Player collects food 
+        // Player collects food 
         if (!f.collected && isColliding(player.x, player.y, player.colliderRadius, f.x, f.y, f.radius)) {
-      f.collected = true;
-      player.heal();
-    }
-  }
+          f.collected = true;
+          player.heal();
+        }
+      }
 
       // Food collected is removed
       for (int i = foods.size() - 1; i >=0; i--) {
@@ -54,6 +55,8 @@ class ScreenManager {
         }
       }
     }
+    else if (state == 3)
+      drawEndWin();
   }
   
   void drawMenu() {
@@ -66,6 +69,11 @@ class ScreenManager {
     imageMode(CENTER);
     image(instructionMenuImg, width/2, height/2, width, height);
     image(button, width / 2, instrButtonY +  instrButtonH / 2, instrButtonW, instrButtonH);
+  }
+  
+  void drawEndWin() {
+    imageMode(CENTER);
+    image(endWinImg, width/2, height/2, width, height);
   }
   
   void handleMousePressed() {
