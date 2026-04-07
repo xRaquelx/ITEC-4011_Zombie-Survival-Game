@@ -7,7 +7,7 @@ class Player {
 
   float colliderRadius = 45;
 
-  int health = 50;
+  int health = 100;
   int maxHealth = 100;
 
   // Damage cooldown 

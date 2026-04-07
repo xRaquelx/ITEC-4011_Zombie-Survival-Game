@@ -28,7 +28,7 @@ void setup() {
   //make smaller for larger forest clusters
   float noiseScale = 0.007;
   //make higher for sparser map
-  float threshold = 0.615;
+  float threshold = 0.7;
   
   for (int x = 0; x < width; x += 60) {
     for (int y = 0; y < height; y += 60) {
