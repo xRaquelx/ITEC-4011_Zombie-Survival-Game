@@ -11,8 +11,8 @@ class Player {
   int maxHealth = 100;
 
   // Damage cooldown 
-  int damageCooldown = 7000;
-  int lastDamageTime = -7000;
+  int damageCooldown = 500;
+  int lastDamageTime = -500;
 
   Player(float startX, float startY) {
     x = startX;
