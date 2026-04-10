@@ -25,7 +25,7 @@ class Zombie {
   // PLayer distance to trigger steering
   float chaseRadius = 250;
   
-  // Player distance to trigger zombie attack state 
+  // Player distance to trigger zombie chase
   float attackRadius = 80;
 
   Zombie(int spawnAtMillis) {
@@ -51,13 +51,15 @@ class Zombie {
     if (state == WANDER) {
       doWander();
     } else {
-      doChase(player);
+      doChase(player); // Pursue
     }
     
+    // Attack state
     if (state == CHASE && dToPlayer <= attackRadius) {
       doAttack(player);
     }
 
+    // Collision avoidance
     x = constrain(x, colliderRadius, width  - colliderRadius);
     y = constrain(y, colliderRadius, height - colliderRadius);
   }
@@ -68,6 +70,7 @@ class Zombie {
     image(zombieImg, x, y, size, size * 2);
   }
 
+  // Spawn at random edge of the screen
   void activate() {
     int edge = (int)random(4);
     switch (edge) {
@@ -80,6 +83,7 @@ class Zombie {
     wanderDir = randomDir();
   }
 
+// Wander state
   void doWander() {
     wanderTimer++;
     if (wanderTimer >= wanderChangeInterval) {
@@ -93,6 +97,7 @@ class Zombie {
     if (y <= colliderRadius || y >= height - colliderRadius) wanderDir.y *= -1;
   }
 
+// Pursue state
   void doChase(Player player) {
     PVector toPlayer = new PVector(player.x - x, player.y - y);
     toPlayer.normalize();
@@ -105,6 +110,7 @@ class Zombie {
     return new PVector(cos(angle), sin(angle));
   }
   
+  // Attack state
   void doAttack (Player player) {
     player.takeDamage();
   }

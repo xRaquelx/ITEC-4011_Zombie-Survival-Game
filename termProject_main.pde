@@ -1,12 +1,18 @@
+// Rachel, Sarah, Gilven
+// ITEC4011 Term project
+// Zombie Survival Game
+
 // Global variables
 Player player;
 ScreenManager screens;
 
+// Lists holding active game objects
 ArrayList<Food> foods = new ArrayList<Food>();
 ArrayList<Tree> trees;
 ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 ArrayList<Artifact> artifacts = new ArrayList<Artifact>();
 
+// Level tracking
 int currentLevel = 1;
 int artifactsNeededPerLevel = 3;
 int artifactsCollectedThisLevel = 0;
@@ -25,16 +31,19 @@ void setup() {
   float safeRadius = 150;
   trees = new ArrayList<Tree>();
 
-  //make smaller for larger forest clusters
+  // Perlin noise
+  // Make smaller for larger forest clusters
   float noiseScale = 0.007;
-  //make higher for sparser map
+  // Make higher for sparser map
   float threshold = 0.7;
   
+  // Place a tree wherever the value exceeds the threshold
   for (int x = 0; x < width; x += 60) {
     for (int y = 0; y < height; y += 60) {
       float n = noise(x * noiseScale, y * noiseScale);
       if (n > threshold) {
         PVector pos = new PVector(x + random(-20, 20), y + random(-20, 20));
+         // Player spawn safe zone
         if (dist(pos.x, pos.y, playerSpawnX, playerSpawnY) > safeRadius) {
           trees.add(new Tree(pos, random(70, 110)));
         }
@@ -59,6 +68,7 @@ void draw() {
     player.update();
     player.display();
 
+    // Heal player if they walk over food
     for (int i = foods.size() - 1; i >= 0; i--) {
       Food f = foods.get(i);
       f.display();
@@ -86,6 +96,7 @@ void keyPressed()   { player.handleKeyPressed(key); }
 void keyReleased()  { player.handleKeyReleased(key); }
 void mousePressed() { screens.handleMousePressed(); }
 
+// Food spawning
 void spawnFood(int amount) {
   for (int i = 0; i < amount; i++) {
     float x = 0;
@@ -96,6 +107,8 @@ void spawnFood(int amount) {
       x = random(80, width - 80);
       y = random(80, height - 80);
       validSpot = true;
+      
+      // Not over a tree 
       for (Tree tree: trees) {
         if (dist(x, y, tree.position.x, tree.position.y) < tree.colliderRadius + 40) {
           validSpot = false;
@@ -110,6 +123,7 @@ void spawnFood(int amount) {
   }
 }
 
+// Spawn every 5s
 void updateFoodSpawner() {
   if (millis() >= nextFoodSpawnTime) {
     if (foods.size() < maxFoodOnMap) {
@@ -123,6 +137,7 @@ boolean isColliding(float x1, float y1, float r1, float x2, float y2, float r2) 
   return dist(x1, y1, x2, y2) < (r1 + r2);
 }
 
+// Level setup
 void setupLevel(int levelNumber) {
   currentLevel = levelNumber;
   artifactsCollectedThisLevel = 0;
@@ -134,6 +149,7 @@ void setupLevel(int levelNumber) {
 
   int baseTime = millis();
 
+// Increase zombie count per level
   if (currentLevel == 1) {
     maxFoodOnMap = 6;
     zombies.add(new Zombie(baseTime + 3000));
@@ -173,6 +189,7 @@ void updateArtifactSpawner() {
   }
 }
 
+//Spawn artifact when none is on the map and more are needed
 void spawnArtifact() {
   float x = 0;
   float y = 0;
@@ -218,6 +235,7 @@ void updateArtifacts() {
   }
 }
 
+// Level progression
 void checkLevelProgress() {
   if (artifactsCollectedThisLevel >= artifactsNeededPerLevel) {
     if (currentLevel == 1)
@@ -229,6 +247,7 @@ void checkLevelProgress() {
   }
 }
 
+// Zombie deal damage to player
 void updateZombies() {
   for (Zombie z : zombies) {
     z.update(player);
@@ -240,6 +259,7 @@ void updateZombies() {
   }
 }
 
+// Level number and artifact collection HUD in top-left
 void drawHUD() {
   if (screens.state == 0 || screens.state == 1 || screens.state == 3)
     return;

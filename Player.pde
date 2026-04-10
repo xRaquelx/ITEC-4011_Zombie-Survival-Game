@@ -3,6 +3,8 @@ class Player {
   float size = 65;
   PImage playerImg;
   float speed = 3;
+  
+  // wasd key states
   boolean w, a, s, d;
 
   float colliderRadius = 45;
@@ -20,13 +22,14 @@ class Player {
     playerImg = loadImage("player.png");
   }
 
+// Movement and collision
   void update() {
     if (w) { y -= speed; if (collidesWithAnyTree()) y += speed; }
     if (s) { y += speed; if (collidesWithAnyTree()) y -= speed; }
     if (a) { x -= speed; if (collidesWithAnyTree()) x += speed; }
     if (d) { x += speed; if (collidesWithAnyTree()) x -= speed; }
     
-    //canvas boundary
+    // Canvas boundary
     float margin = 30;
     x = constrain(x, -margin, width  + margin);
     y = constrain(y, -margin, height + margin);
@@ -45,6 +48,7 @@ class Player {
     rect(x - 50, y - 100, 100 * healthPercent, 10);
   }
 
+// Restore 10 hp when food collected
   void heal() {
     health += 10;
     if (health > maxHealth) health = maxHealth;
@@ -58,6 +62,7 @@ class Player {
     }
   }
 
+// Tree collision
   boolean collidesWithAnyTree() {
     for (Tree tree : trees) {
       float dx = x - tree.position.x;
