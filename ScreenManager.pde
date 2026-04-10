@@ -23,7 +23,7 @@ class ScreenManager {
     instrButtonW = 200;
     instrButtonH = 100;
     instrButtonX = width / 2 - instrButtonW / 2;
-    instrButtonY = height - 350;
+    instrButtonY = height - 250;
   }
   
   void display(Player player) {
