@@ -4,6 +4,7 @@ class ScreenManager {
   PImage startMenuImg;
   PImage instructionMenuImg; 
   PImage endWinImg;
+  PImage endLoseImg;
   PImage button;
   
   float menuButtonX, menuButtonY, menuButtonW, menuButtonH;
@@ -14,6 +15,7 @@ class ScreenManager {
     instructionMenuImg = loadImage("instructionsMenu.png");
     button = loadImage("button.png");
     endWinImg = loadImage("endWin.png");
+    endLoseImg = loadImage("endLose.png");
 
     menuButtonW = 200;
     menuButtonH = 100;
@@ -57,6 +59,8 @@ class ScreenManager {
     }
     else if (state == 3)
       drawEndWin();
+    else if (state == 4)
+      drawEndLose();
   }
   
   void drawMenu() {
@@ -74,6 +78,11 @@ class ScreenManager {
   void drawEndWin() {
     imageMode(CENTER);
     image(endWinImg, width/2, height/2, width, height);
+  }
+  
+  void drawEndLose() {
+    imageMode(CENTER);
+    image(endLoseImg, width/2, height/2, width, height);
   }
   
   void handleMousePressed() {
