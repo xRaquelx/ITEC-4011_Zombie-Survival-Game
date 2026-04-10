@@ -84,14 +84,26 @@ class Zombie {
   }
 
 // Wander state
-  void doWander() {
+ void doWander() {
     wanderTimer++;
     if (wanderTimer >= wanderChangeInterval) {
       wanderDir = randomDir();
       wanderTimer = 0;
     }
+
+    // Move X, revert and pick new direction if hit a tree
     x += wanderDir.x * speed;
+    if (collidesWithAnyTree()) {
+      x -= wanderDir.x * speed;
+      wanderDir.x *= -1;  // Bounce off the tree horizontally
+    }
+
+    // Move Y, revert and pick new direction if hit a tree
     y += wanderDir.y * speed;
+    if (collidesWithAnyTree()) {
+      y -= wanderDir.y * speed;
+      wanderDir.y *= -1;  // Bounce off the tree vertically
+    }
 
     if (x <= colliderRadius || x >= width  - colliderRadius) wanderDir.x *= -1;
     if (y <= colliderRadius || y >= height - colliderRadius) wanderDir.y *= -1;
@@ -101,10 +113,29 @@ class Zombie {
   void doChase(Player player) {
     PVector toPlayer = new PVector(player.x - x, player.y - y);
     toPlayer.normalize();
+
     x += toPlayer.x * chaseSpeed;
+    if (collidesWithAnyTree()) {
+      x -= toPlayer.x * chaseSpeed;
+    }
+
     y += toPlayer.y * chaseSpeed;
+    if (collidesWithAnyTree()) {
+      y -= toPlayer.y * chaseSpeed;
+    }
   }
 
+  // Returns true if this zombie's collider overlaps any tree's collider
+  boolean collidesWithAnyTree() {
+    for (Tree tree : trees) {
+      float dx = x - tree.position.x;
+      float dy = y - tree.position.y;
+      if (sqrt(dx*dx + dy*dy) < colliderRadius + tree.colliderRadius) return true;
+    }
+    return false;
+  }
+
+  // Returns a random unit vector
   PVector randomDir() {
     float angle = random(TWO_PI);
     return new PVector(cos(angle), sin(angle));
