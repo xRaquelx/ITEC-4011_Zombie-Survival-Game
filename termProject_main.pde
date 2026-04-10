@@ -75,6 +75,9 @@ void draw() {
     drawHUD();
     updateFoodSpawner();
   }
+  
+  if (player.health == 0)
+    screens.state = 4;
 
   screens.display(player);
 }
