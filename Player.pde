@@ -29,7 +29,7 @@ class Player {
     if (a) { x -= speed; if (collidesWithAnyTree()) x += speed; }
     if (d) { x += speed; if (collidesWithAnyTree()) x -= speed; }
     
-    // Canvas boundary
+// Canvas boundary
     float margin = 30;
     x = constrain(x, -margin, width  + margin);
     y = constrain(y, -margin, height + margin);
