@@ -110,6 +110,8 @@ void draw() {
 
 void keyPressed() {
   player.handleKeyPressed(key);
+  if ((screens.state == 3 || screens.state == 4) && (key == 'r' || key == 'R'))
+    restartGame();
 }
 
 void keyReleased() {
@@ -453,4 +455,28 @@ void drawHUD() {
   } else {
     text("Artifacts: " + artifactsCollectedThisLevel + "/" + artifactsNeededPerLevel, 20, 60);
   }
+}
+
+// Restart game
+void restartGame() {
+  // Reset player
+  player = new Player(200, 200);
+
+  // Reset artifacts and zombies
+  zombies.clear();
+  artifacts.clear();
+  foods.clear();
+
+  artifactOnMap = false;
+  artifactsCollectedThisLevel = 0;
+
+  level3HeartActive = false;
+  zombieHeartPath.clear();
+  zombiePathIndex = 0;
+
+  currentLevel = 1;
+
+  screens.state = 2;
+
+  setupLevel(1);
 }
