@@ -14,7 +14,7 @@ ArrayList<Artifact> artifacts = new ArrayList<Artifact>();
 
 // Level tracking
 int currentLevel = 1;
-int artifactsNeededPerLevel = 1;
+int artifactsNeededPerLevel = 3;
 int artifactsCollectedThisLevel = 0;
 
 boolean artifactOnMap = false;
