@@ -15,7 +15,7 @@ class Artifact {
   void display() {
     if (!collected) {
       imageMode(CENTER);
-      image(artifactImg, x, y, radius * 2, radius * 2);
+      image(artifactImg, x, y, radius * 2, radius * 2.5);
     }
   }
 }

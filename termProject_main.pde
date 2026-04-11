@@ -14,7 +14,7 @@ ArrayList<Artifact> artifacts = new ArrayList<Artifact>();
 
 // Level tracking
 int currentLevel = 1;
-int artifactsNeededPerLevel = 3;
+int artifactsNeededPerLevel = 1;
 int artifactsCollectedThisLevel = 0;
 
 boolean artifactOnMap = false;
@@ -25,6 +25,7 @@ int maxFoodOnMap;
 
 // Level 3
 float heartX, heartY;
+PImage heart;
 float heartRadius = 30;
 boolean level3HeartActive = false;
 
@@ -39,6 +40,8 @@ void setup() {
   float playerSpawnX = 200, playerSpawnY = 200;
   float safeRadius = 150;
   trees = new ArrayList<Tree>();
+  
+  heart = loadImage("heart.png");
 
   // Perlin noise
   float noiseScale = 0.007;
@@ -343,7 +346,7 @@ void updateLevel3Race() {
     return;
   }
 
-  moveZombieAlongPath(z, zombieHeartPath, 10);
+  moveZombieAlongPath(z, zombieHeartPath, 7);
   z.display();
 
   if (isColliding(z.x, z.y, z.colliderRadius, heartX, heartY, heartRadius)) {
@@ -354,15 +357,8 @@ void updateLevel3Race() {
 }
 
 void drawHeart() {
-  pushStyle();
-  noStroke();
-  fill(220, 40, 70);
-
-  ellipse(heartX - 12, heartY - 8, 24, 24);
-  ellipse(heartX + 12, heartY - 8, 24, 24);
-  triangle(heartX - 24, heartY, heartX + 24, heartY, heartX, heartY + 32);
-
-  popStyle();
+  imageMode(CENTER);
+  image(heart, heartX, heartY, 100, 100);
 }
 
 void moveZombieAlongPath(Zombie z, ArrayList<PVector> path, float moveSpeed) {
