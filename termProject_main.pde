@@ -346,7 +346,7 @@ void updateLevel3Race() {
     return;
   }
 
-  moveZombieAlongPath(z, zombieHeartPath, 7);
+  moveZombieAlongPath(z, zombieHeartPath, 6.5);
   z.display();
 
   if (isColliding(z.x, z.y, z.colliderRadius, heartX, heartY, heartRadius)) {

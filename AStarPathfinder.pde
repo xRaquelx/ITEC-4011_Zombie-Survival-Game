@@ -12,7 +12,8 @@ class AStarPathfinder {
     blockedGrid = new boolean[cols][rows];
     buildBlockedGrid();
   }
-
+  
+  // Builds grid
   void buildBlockedGrid() {
     for (int cx = 0; cx < cols; cx++) {
       for (int cy = 0; cy < rows; cy++) {
@@ -33,6 +34,7 @@ class AStarPathfinder {
     }
   }
 
+  // Finds the best path
   ArrayList<PVector> findPath(float startX, float startY, float endX, float endY) {
     int startCol = constrain(int(startX / gridSize), 0, cols - 1);
     int startRow = constrain(int(startY / gridSize), 0, rows - 1);
@@ -107,10 +109,12 @@ class AStarPathfinder {
     return null;
   }
 
+  // Calculates estimated distance from a node to the heart
   float heuristic(int c1, int r1, int c2, int r2) {
     return abs(c1 - c2) + abs(r1 - r2);
   }
 
+  // Builds the final best path to the heart
   ArrayList<PVector> reconstructPath(AStarNode endNode) {
     ArrayList<PVector> path = new ArrayList<PVector>();
     AStarNode current = endNode;
@@ -126,6 +130,7 @@ class AStarPathfinder {
   }
 }
 
+// Represents each grid cell used in pathfinding
 class AStarNode {
   int col, row;
   float g = 999999;
