@@ -2,7 +2,7 @@ class Player {
   float x, y;
   float size = 65;
   PImage playerImg;
-  float speed = 3;
+  float speed = 4;
   
   // wasd key states
   boolean w, a, s, d;
@@ -29,7 +29,7 @@ class Player {
     if (a) { x -= speed; if (collidesWithAnyTree()) x += speed; }
     if (d) { x += speed; if (collidesWithAnyTree()) x -= speed; }
     
-    // Canvas boundary
+// Canvas boundary
     float margin = 30;
     x = constrain(x, -margin, width  + margin);
     y = constrain(y, -margin, height + margin);
