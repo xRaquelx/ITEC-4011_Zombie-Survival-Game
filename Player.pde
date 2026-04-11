@@ -2,7 +2,7 @@ class Player {
   float x, y;
   float size = 65;
   PImage playerImg;
-  float speed = 3;
+  float speed = 4;
   
   // wasd key states
   boolean w, a, s, d;
